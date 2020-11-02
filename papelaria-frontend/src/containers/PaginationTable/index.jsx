@@ -119,6 +119,7 @@ export default function CustomPaginationActionsTable() {
   };
 
   return (
+    
     <TableContainer component={Paper}>
       <Table aria-label="tabela paginada">
         <TableHead>
