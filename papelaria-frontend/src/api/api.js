@@ -1,8 +1,8 @@
 import axios from 'axios';
-import ENDPOINTS from './endpoints'
+import endpoints from './endpoints'
 
 const api = axios.create({
-  baseURL: ENDPOINTS.BASE_URL
+  baseURL: endpoints.BASE_URL
 })
 
 export default api;
