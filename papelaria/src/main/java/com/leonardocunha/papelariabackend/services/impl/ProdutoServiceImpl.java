@@ -1,5 +1,6 @@
 package com.leonardocunha.papelariabackend.services.impl;
 
+import com.leonardocunha.papelariabackend.exception.ResourceNotFoundException;
 import com.leonardocunha.papelariabackend.model.Produto;
 import com.leonardocunha.papelariabackend.services.ProdutoService;
 import com.leonardocunha.papelariabackend.utils.CollectionUtils;
@@ -35,7 +36,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     @Override
     public Produto buscar(Integer id) {
-        return produtoRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Produto não encontrado"));
+        return produtoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado. ID: " + id));
     }
 
     @Override
@@ -46,6 +47,8 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     @Override
     public void deletar(Integer id) {
-        produtoRepository.deleteById(id);
+        Produto produto = produtoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado. ID: " + id));
+        produtoRepository.delete(produto);
     }
 }
