@@ -1,21 +1,32 @@
-import { AppBar, Grid, Toolbar, withStyles } from '@material-ui/core'
-import React from 'react'
+import { AppBar, InputBase, makeStyles, Toolbar, withStyles } from '@material-ui/core'
+import React from 'react';
+import SearchIcon from '@material-ui/icons/Search';
 
-const style = {
-  header: {
-      backgroundColor: '#d61846'
-  }
-};
+const useStyles = makeStyles ({
+  root: {
+      backgroundColor: '#FFF'
+  },
+  buscaInput: {
+    opacity: '0.6',
+    padding: '0px 8px',
+    fontSize: '0.8rem',
+    '& .MuiSvgIcon-root': {
+      marginRight: '8px'
+    }
+  },
+});
 
-const Header = (props)  => {
-  const { classes } = props;
+export default function Header() {
+  const classes = useStyles();
 
   return (
-    <AppBar className={classes.header} position='static'>
+    <AppBar className={classes.root} position='static'>
       <Toolbar> 
+        <InputBase className={classes.buscaInput}
+          placeholder="Buscar produto..."
+          startAdornment={<SearchIcon fontSize="small"/>}
+        />
       </Toolbar>
     </AppBar>
   )
 }
-
-export default withStyles(style)(Header);
