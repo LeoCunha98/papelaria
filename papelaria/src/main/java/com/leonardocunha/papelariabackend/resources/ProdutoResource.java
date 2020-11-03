@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(value= "papelaria/produtos")
+@RequestMapping(value= "api/papelaria/produtos")
 public class ProdutoResource {
 
     private final ProdutoService produtoService;
