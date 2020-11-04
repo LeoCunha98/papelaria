@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import * as actions from "../redux/actions/produtos"
+import * as actions from "../redux/actions/produto";
+import { AssessmentIcon } from '@material-ui/icons/Assessment';
 
-const Produtos = (props) => {
+
+function Produtos (props) {
 
   const [produtos, setProdutos] = useState([]);
 
@@ -10,11 +12,15 @@ const Produtos = (props) => {
     props.getAllProdutos()
   }, [produtos])
 
-  return (<div>PRODUTOS</div>)
+  return (
+    <div>
+      xxxx
+    </div>
+  )
 }
 
 const mapStateToProps = state => ({
-  produtoList: state.produtos.list
+  produtoList: state.produto.list
 })
 
 const mapActionToProps = {
