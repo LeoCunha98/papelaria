@@ -20,7 +20,7 @@ function Produtos (props) {
 }
 
 const mapStateToProps = state => ({
-  produtoList: state.produto.list
+  produtoList: state.produtos.list
 })
 
 const mapActionToProps = {
