@@ -37,14 +37,44 @@ const ProdutosForm = (props) => {
             value={values.descricao}
             onChange={handleInputChange}
           />
-          <Controls.Select 
-            label="Categoria"
-            name="categoria"
-            value={values.categoria}
+          <Controls.Input
+            label="Quantidade de Itens"
+            name="quantidade"
+            value={values.quantidade}
             onChange={handleInputChange}
-            options={categorias}
           />
-        </Grid>
+          </Grid>
+          <Grid item xs={6}>
+            <Controls.Select 
+              label="Categoria"
+              name="categoria"
+              value={values.categoria}
+              onChange={handleInputChange}
+              options={categorias}
+            />
+            <Controls.Input
+              label="Código de Barras"
+              name="codigoBarra"
+              value={values.codigoBarra}
+              onChange={handleInputChange}
+            />
+            <div>
+              <Controls.Button 
+                variant="outlined"
+                color="secondary"
+                text="Enviar"
+                size="large"
+                type="submit"
+              /> 
+              <Controls.Button 
+                variant="outlined"
+                color="default"
+                text="Cancelar"
+                size="large"
+                type="submit"
+              />  
+            </div>
+          </Grid>
       </Grid>
     </Form>
   )

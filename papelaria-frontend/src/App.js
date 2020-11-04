@@ -1,4 +1,3 @@
-import './App.css';
 import { store } from './redux/actions/store';
 import { Provider } from 'react-redux';
 import MenuLateral from './components/MenuLateral';
@@ -9,7 +8,6 @@ import Produtos from './pages/Produtos';
 const useStyles = makeStyles({
   appMain: {
     paddingLeft: '320px',
-    width: '100%'
   }
 });
 
