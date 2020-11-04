@@ -61,6 +61,7 @@ const ProdutosForm = (props) => {
     e.preventDefault();
     if(validacaoCampos()){
       props.postProduto(values)
+      resetForm()
     }
   }
 
@@ -85,6 +86,7 @@ const ProdutosForm = (props) => {
           <Controls.Input
             label="Quantidade de Itens"
             name="quantidade"
+            type="number"
             value={values.quantidade}
             onChange={handleInputChange}
             error={errors.quantidade}
@@ -102,6 +104,7 @@ const ProdutosForm = (props) => {
             <Controls.Input
               label="Código de Barras"
               name="codigoBarra"
+              type="number"
               value={values.codigoBarra}
               onChange={handleInputChange}
               error={errors.codigoBarra}
