@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import * as actions from "../redux/actions/produto";
-import { AssessmentIcon } from '@material-ui/icons/Assessment';
+import * as actions from "../redux/actions/produtos";
+import AssessmentIcon from '@material-ui/icons/Assessment';
+import PageHeader from '../components/PageHeader';
 
 
 function Produtos (props) {
@@ -13,9 +14,13 @@ function Produtos (props) {
   }, [produtos])
 
   return (
-    <div>
-      xxxx
-    </div>
+    <>
+      <PageHeader 
+        titulo="Produtos"
+        subtitulo="Controle de Estoque"
+        icone={<AssessmentIcon fontSize="large"/>} 
+      />
+    </>
   )
 }
 

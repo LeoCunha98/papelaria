@@ -1,8 +1,6 @@
 import api from './../../api/api';
 import endpoints from './../../api/endpoints';
 
-
-
 export const ACTION_TYPES = {
   POST: "POST",
   GET: "GET",

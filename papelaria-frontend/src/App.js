@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import MenuLateral from './components/MenuLateral';
 import { makeStyles } from '@material-ui/core/styles';
 import Header from './components/Header';
-import { AssessmentIcon } from '@material-ui/icons/Assessment';
+import Produtos from './pages/Produtos';
 
 const useStyles = makeStyles({
   appMain: {
@@ -21,6 +21,7 @@ function App() {
       <MenuLateral />
         <div className={classes.appMain}>
           <Header />
+          <Produtos />
         </div>
     </Provider>
   );
