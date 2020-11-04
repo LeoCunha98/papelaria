@@ -1,10 +1,11 @@
-import { AppBar, InputBase, makeStyles, Toolbar, withStyles } from '@material-ui/core'
+import { AppBar, InputBase, makeStyles, Toolbar } from '@material-ui/core'
 import React from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = makeStyles ({
   root: {
-      backgroundColor: '#FFF'
+      backgroundColor: '#FFF',
+      transform: 'translateZ(0)'
   },
   buscaInput: {
     opacity: '0.6',
