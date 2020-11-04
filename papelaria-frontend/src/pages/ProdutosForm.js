@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Grid, TextField, makeStyles } from '@material-ui/core';
+import { useForm, Form } from './../components/useForm';
 
 const initialFieldValues = {
   nome: "",
@@ -9,30 +10,18 @@ const initialFieldValues = {
   codigoBarra: ""
 }
 
-const useStyles = makeStyles({
-  root: {
-    '& .MuiFormControl-root': {
-      width: '80%',
-      margin: "8px",
-    }
-  }
-});
+
 
 const ProdutosForm = (props) => {
-
-  const [values, setValues] = useState(initialFieldValues);
-  const classes = useStyles();
-
-  const handleInputChange = e => {
-    const {name, value} = e.target;
-    setValues({
-      ...values,
-      [name]: value
-    })
-  }
+    
+  const {
+    values,
+    setValues, 
+    handleInputChange
+  } = useForm(initialFieldValues); 
 
   return (
-    <form className={classes.root}>
+    <Form>
       <Grid container>
         <Grid item xs={6}>
           <TextField 
@@ -51,7 +40,7 @@ const ProdutosForm = (props) => {
           />
         </Grid>
       </Grid>
-    </form>
+    </Form>
   )
 }
 
