@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
 import { useForm, Form } from './../components/useForm';
-import Input from '../components/controls/Input';
+import Controls from '../components/controls/Controls';
 
 const initialFieldValues = {
   nome: "",
@@ -25,13 +25,13 @@ const ProdutosForm = (props) => {
     <Form>
       <Grid container>
         <Grid item xs={6}>
-          <Input
+          <Controls.Input
             label="Nome do Produto"
             name="nome"
             value={values.nome}
             onChange={handleInputChange} 
           />
-          <Input
+          <Controls.Input
             label="Descrição do Produto (marca, modelo, etc)"
             name="descricao"
             value={values.descricao}
