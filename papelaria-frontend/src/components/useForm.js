@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core';
 
-export function useForm(initialFieldValues) {
+export function useForm(initialFieldValues, validateOnChange=false, validacaoCampos) {
 
   const [values, setValues] = useState(initialFieldValues);
   const [errors, setErrors] = useState({});
@@ -13,14 +13,23 @@ export function useForm(initialFieldValues) {
       ...values,
       [name]: value
     })
+    if(validateOnChange){
+      validacaoCampos({[name]: value})
+    }
   }
+
+  const resetForm = () => {
+    setValues(initialFieldValues);
+    setErrors({});
+  } 
 
   return { 
     values,
     setValues,
     errors,
     setErrors,
-    handleInputChange
+    handleInputChange,
+    resetForm
   }
 }
 

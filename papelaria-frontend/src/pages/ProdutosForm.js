@@ -37,8 +37,6 @@ const ProdutosForm = (props) => {
       temp.codigoBarra = fieldValues.codigoBarra ? "" : `O campo é obrigatório`
     }
 
-    console.log('temp', temp)
-
     setErrors({
       ...temp
     })
@@ -53,7 +51,8 @@ const ProdutosForm = (props) => {
     errors,
     setErrors,
     handleInputChange,
-  } = useForm(initialFieldValues, validacaoCampos); 
+    resetForm
+  } = useForm(initialFieldValues, true, validacaoCampos); 
 
 
   const handleSubmitForm = (e) => {
@@ -119,6 +118,7 @@ const ProdutosForm = (props) => {
                 text="Cancelar"
                 size="large"
                 type="submit"
+                onClick={resetForm}
               />  
             </div>
           </Grid>
