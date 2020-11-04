@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { Grid, TextField, makeStyles } from '@material-ui/core';
+import React from 'react';
+import { Grid } from '@material-ui/core';
 import { useForm, Form } from './../components/useForm';
+import Input from '../components/controls/Input';
 
 const initialFieldValues = {
   nome: "",
@@ -24,16 +25,14 @@ const ProdutosForm = (props) => {
     <Form>
       <Grid container>
         <Grid item xs={6}>
-          <TextField 
-            variant="outlined"
+          <Input
             label="Nome do Produto"
             name="nome"
             value={values.nome}
-            onChange={handleInputChange}
+            onChange={handleInputChange} 
           />
-          <TextField 
-            variant="outlined"
-            label="Descrição do Produto (marca/modelo, etc)"
+          <Input
+            label="Descrição do Produto (marca, modelo, etc)"
             name="descricao"
             value={values.descricao}
             onChange={handleInputChange}
