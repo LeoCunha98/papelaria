@@ -1,6 +1,5 @@
 import React from 'react'
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import Header from './Header';
+import { withStyles } from '@material-ui/core/styles'
 
 const style = {
   menuLateral: {

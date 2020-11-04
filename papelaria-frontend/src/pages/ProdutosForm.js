@@ -133,7 +133,7 @@ const ProdutosForm = (props) => {
 }
 
 const mapStateToProps = state => ({
-  produtoList: state.produtos.list
+  produtosList: state.produtos.list
 })
 
 const mapActionToProps = {
