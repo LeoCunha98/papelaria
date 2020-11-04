@@ -2,6 +2,8 @@ import React from 'react';
 import { Grid } from '@material-ui/core';
 import { useForm, Form } from './../components/useForm';
 import Controls from '../components/controls/Controls';
+import { connect } from 'react-redux';
+import * as actions from "../redux/actions/produtos";
 
 const initialFieldValues = {
   nome: "",
@@ -58,7 +60,7 @@ const ProdutosForm = (props) => {
   const handleSubmitForm = (e) => {
     e.preventDefault();
     if(validacaoCampos()){
-      window.alert("Funcionou")
+      props.postProduto(values)
     }
   }
 
@@ -127,4 +129,12 @@ const ProdutosForm = (props) => {
   )
 }
 
-export default ProdutosForm;
+const mapStateToProps = state => ({
+  produtoList: state.produtos.list
+})
+
+const mapActionToProps = {
+  postProduto: actions.postItem
+}
+
+export default connect(mapStateToProps, mapActionToProps)(ProdutosForm);

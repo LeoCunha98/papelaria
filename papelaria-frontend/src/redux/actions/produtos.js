@@ -17,3 +17,13 @@ export const getAll = () => dispatch => {
     })
   }).catch(err => console.log(err))
 }
+
+export const postItem = (data, onSuccess) => dispatch => {
+  api.post(`${endpoints.INSERIR_PRODUTO}`, data)
+  .then(response => {
+    dispatch({
+      type: ACTION_TYPES.POST,
+      payload: response.data
+    })
+  })
+}
