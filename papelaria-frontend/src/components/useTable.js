@@ -23,22 +23,36 @@ const useStyles = makeStyles({
         backgroundColor: "#fffbf2",
         cursor: 'pointer'
       }
-    }
+    },
 })
 
 
-export default function useTable(dados, headers) {
+export default function useTable(dados, headers, filtrarProduto) {
   const classes = useStyles();
 
   const pages = [5, 10];
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(pages[page]);
 
   const TableContainer = (props) => (
     <Table className={classes.table}>
       {props.children}
     </Table>
   )
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  }
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  }
+
+  const dadosPaginados = () => {
+    return filtrarProduto.funcao(dados)
+    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+  }
 
   const TblPagination = () => (
     <TablePagination
@@ -47,6 +61,8 @@ export default function useTable(dados, headers) {
       rowsPerPage={rowsPerPage}
       rowsPerPageOptions={pages}
       count={dados.length}
+      onChangePage={handleChangePage}
+      onChangeRowsPerPage={handleChangeRowsPerPage}
     />
   )
 
@@ -67,7 +83,8 @@ export default function useTable(dados, headers) {
   return {
     TableContainer,
     TableHead,
-    TblPagination
+    TblPagination,
+    dadosPaginados
   }
 
 }
