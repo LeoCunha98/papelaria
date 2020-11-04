@@ -17,6 +17,13 @@ const useStyles = makeStyles({
 
 function Produtos (props) {
   const [produtos, setProdutos] = useState([]);
+
+  let categorias = [
+    { id: '1', nome: "Material escolar"},
+    { id: '2', nome: "Livros didáticos"},
+    { id: '3', nome: "Lápis e Canetas"}
+  ];
+
   const classes = useStyles();
 
   useEffect(() => {
@@ -31,7 +38,7 @@ function Produtos (props) {
         icone={<AssessmentIcon fontSize="large"/>} 
       />
       <Paper className={classes.pageContent}>
-        <ProdutosForm />
+        <ProdutosForm categorias={categorias}/>
       </Paper>
     </>
   )

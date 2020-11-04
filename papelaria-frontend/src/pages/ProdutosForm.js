@@ -11,10 +11,10 @@ const initialFieldValues = {
   codigoBarra: ""
 }
 
-
-
 const ProdutosForm = (props) => {
     
+  const { categorias } = props;
+
   const {
     values,
     setValues, 
@@ -36,6 +36,13 @@ const ProdutosForm = (props) => {
             name="descricao"
             value={values.descricao}
             onChange={handleInputChange}
+          />
+          <Controls.Select 
+            label="Categoria"
+            name="categoria"
+            value={values.categoria}
+            onChange={handleInputChange}
+            options={categorias}
           />
         </Grid>
       </Grid>
