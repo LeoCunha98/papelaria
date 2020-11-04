@@ -7,6 +7,9 @@ const useStyles = makeStyles ({
       backgroundColor: '#FFF',
       transform: 'translateZ(0)'
   },
+  '& .MuiInputBase-root': {
+    width: '100%'
+  },
   buscaInput: {
     opacity: '0.6',
     padding: '0px 8px',
