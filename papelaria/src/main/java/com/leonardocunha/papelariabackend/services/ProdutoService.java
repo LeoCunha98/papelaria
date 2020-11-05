@@ -1,5 +1,6 @@
 package com.leonardocunha.papelariabackend.services;
 
+import com.leonardocunha.papelariabackend.dto.ProdutoDTO;
 import com.leonardocunha.papelariabackend.model.Produto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,5 +17,7 @@ public interface ProdutoService {
     Produto inserir(Produto produto);
 
     void deletar(Integer id);
+
+    Produto editar(ProdutoDTO produtoDTO, Integer id);
 
 }

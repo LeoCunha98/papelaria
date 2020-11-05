@@ -1,5 +1,6 @@
 package com.leonardocunha.papelariabackend.services.impl;
 
+import com.leonardocunha.papelariabackend.dto.ProdutoDTO;
 import com.leonardocunha.papelariabackend.exception.ResourceNotFoundException;
 import com.leonardocunha.papelariabackend.model.Produto;
 import com.leonardocunha.papelariabackend.services.ProdutoService;
@@ -10,9 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.leonardocunha.papelariabackend.repository.ProdutoRepository;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 public class ProdutoServiceImpl implements ProdutoService {
@@ -50,5 +49,18 @@ public class ProdutoServiceImpl implements ProdutoService {
         Produto produto = produtoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado. ID: " + id));
         produtoRepository.delete(produto);
+    }
+
+    public Produto editar(ProdutoDTO produtoDTO, Integer id){
+
+        Produto produtoPersistente = buscar(id);
+
+        produtoPersistente.setNome(produtoDTO.getNome());
+        produtoPersistente.setCategoria(produtoDTO.getCategoria());
+        produtoPersistente.setCodigoBarra(produtoDTO.getCodigoBarra());
+        produtoPersistente.setQuantidade(produtoDTO.getQuantidade());
+        produtoRepository.save(produtoPersistente);
+
+        return produtoPersistente;
     }
 }

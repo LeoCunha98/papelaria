@@ -43,7 +43,15 @@ public class ProdutoResource {
     public ResponseEntity<ProdutoDTO> adicionarProduto(@RequestBody @Valid ProdutoDTO produtoDTO){
         Produto produto = modelMapper.map(produtoDTO, Produto.class);
         produtoService.inserir(produto);
+        produtoDTO.setId(produto.getId());
         return ResponseEntity.ok().body(produtoDTO);
+    }
+
+    @PutMapping(path = "/{id}")
+    public ResponseEntity<ProdutoDTO> buscarProduto(@RequestBody @Valid ProdutoDTO produtoDTO, @PathVariable Integer id){
+        Produto novoProduto = produtoService.editar(produtoDTO, id);
+        ProdutoDTO novoProdutoDTO = modelMapper.map(novoProduto, ProdutoDTO.class);
+        return ResponseEntity.ok().body(novoProdutoDTO);
     }
 
     @DeleteMapping("/{id}")
