@@ -43,11 +43,6 @@ const headers = [
 ]
 
 function Produtos (props) {
-  
-  useEffect(() => {
-    props.getAllProdutos()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   let produtos = props.produtosList;
   const classes = useStyles();
@@ -56,7 +51,12 @@ function Produtos (props) {
   const [filtrarProduto, setFiltrarProduto] = useState({ funcao: (produtos) => { return produtos; }});
   const [openPopup, setOpenPopup] = useState({ isOpen:false , title:"" });
   const [notificacao, setNotificacao] = useState({ isOpen:false, message:"", type:"" });
-  const [confirmDialog, setConfirmDialog] = useState({ isOpen:false, title:"", subtitle:"" });
+  const [confirmDialog, setConfirmDialog] = useState({ isOpen:false, title:"", subtitle:"" }); 
+
+  useEffect(() => {
+    props.getAllProdutos();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.produtosList.length])
 
   const { 
     TableContainer, 
@@ -106,12 +106,10 @@ function Produtos (props) {
   }
 
   const onDelete = (id) => {
-      
     setConfirmDialog({
       ...confirmDialog,
       isOpen: false,
     });
-    props.deleteProduto(id);
     props.getAllProdutos();
     produtos = props.produtosList;
     setNotificacao({

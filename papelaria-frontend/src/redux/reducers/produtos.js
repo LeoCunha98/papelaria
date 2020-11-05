@@ -1,7 +1,7 @@
 import { ACTION_TYPES } from './../actions/produtos';
 
 const initialState = {
-  list: []
+  list: [],
 }
 
 export const produtos = (state = initialState, action ) => {
