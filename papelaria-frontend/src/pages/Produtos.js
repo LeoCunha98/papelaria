@@ -27,10 +27,6 @@ const useStyles = makeStyles({
     position: 'absolute',
     right: "10px",
   },
-  iconeVisualizar: {
-    paddingLeft: "30px",
-    verticalAlign: "bottom",
-  }
 });
 
 const headers = [
@@ -110,13 +106,14 @@ function Produtos (props) {
       ...confirmDialog,
       isOpen: false,
     });
-    props.getAllProdutos();
-    produtos = props.produtosList;
+    props.deleteProduto(id);
     setNotificacao({
       isOpen: true,
       message: "Produto removido com sucesso!",
       type: "error"
     });
+    props.getAllProdutos();
+    produtos = props.produtosList;
   }
 
   return (
@@ -162,19 +159,19 @@ function Produtos (props) {
                   <TableCell>{produto.id}</TableCell>
                   <TableCell>
                     {produto.nome} 
-                    <Controls.ActionButton >
-                      {<VisibilityIcon  
-                        onClick={() => {
-                          openInPopup(produto, "Detalhes do Produto");
-                          setDisabledFields(true)
-                        }}
-                        className={classes.iconeVisualizar}
-                      />}
-                    </Controls.ActionButton>
                   </TableCell>
                   <TableCell>{produto.quantidade}</TableCell>
                   <TableCell>{produto.categoria}</TableCell>
                   <TableCell>
+                  <Controls.ActionButton >
+                    {<VisibilityIcon  
+                      fontSize="small"
+                      onClick={() => {
+                        openInPopup(produto, "Detalhes do Produto");
+                        setDisabledFields(true)
+                      }}
+                    />}
+                </Controls.ActionButton>
                     <Controls.ActionButton>
                       <EditIcon 
                         color="primary" 
