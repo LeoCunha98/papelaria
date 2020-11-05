@@ -10,6 +10,7 @@ import Controls from './../components/controls/Controls';
 import SearchIcon from '@material-ui/icons/Search';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 import CloseIcon from '@material-ui/icons/Close';
 import Popup from '../components/Popup';
 import Notificacao from '../components/Notificacao';
@@ -25,7 +26,10 @@ const useStyles = makeStyles({
   botaoAdicionar: {
     position: 'absolute',
     right: "10px",
-
+  },
+  iconeVisualizar: {
+    paddingLeft: "30px",
+    verticalAlign: "bottom",
   }
 });
 
@@ -48,8 +52,9 @@ function Produtos (props) {
   const classes = useStyles();
   const [produtoParaEditar, setProdutoParaEditar] = useState(null);
   const [filtrarProduto, setFiltrarProduto] = useState({ funcao: (produtos) => { return produtos; }});
-  const [openPopup, setOpenPopup] = useState(false);
+  const [openPopup, setOpenPopup] = useState({ isOpen:false , title:"" });
   const [notificacao, setNotificacao] = useState({ isOpen:false, message:"", type:"" });
+  const [confirmDialog, setConfirmDialog] = useState({ isOpen:false, title:"", subtitle:"" });
 
   const { 
     TableContainer, 
@@ -83,7 +88,7 @@ function Produtos (props) {
     }
     resetForm();
     setProdutoParaEditar(null);
-    setOpenPopup(false);
+    setOpenPopup({ isOpen: false, title:"" });
     props.getAllProdutos();
     produtos = props.produtosList;
     setNotificacao({
@@ -93,13 +98,25 @@ function Produtos (props) {
     });
   }
 
-  const openInPopup = (produto) => {
+  const openInPopup = (produto, title) => {
     setProdutoParaEditar(produto);
-    setOpenPopup(true)
+    setOpenPopup({ isOpen: true , title: title})
   }
 
   const onDelete = (id) => {
+      
+    setConfirmDialog({
+      ...confirmDialog,
+      isOpen: false,
+    });
     props.deleteProduto(id);
+    props.getAllProdutos();
+    produtos = props.produtosList;
+    setNotificacao({
+      isOpen: true,
+      message: "Produto removido com sucesso!",
+      type: "error"
+    });
   }
 
   return (
@@ -128,7 +145,7 @@ function Produtos (props) {
             text="Novo Produto"
             variant="contained"
             startIcon={<AddIcon />}
-            onClick={() => {setOpenPopup(true); setProdutoParaEditar(null)}}
+            onClick={() => {setOpenPopup({ isOpen:true, title: "Adicionar Produto"}); setProdutoParaEditar(null)}}
           />
         </Toolbar>
         <TableContainer>
@@ -138,7 +155,15 @@ function Produtos (props) {
                dadosPaginados().map(produto => (
                 <TableRow key={produto.id}>
                   <TableCell>{produto.id}</TableCell>
-                  <TableCell>{produto.nome}</TableCell>
+                  <TableCell>
+                    {produto.nome} 
+                    <Controls.ActionButton >
+                      {<VisibilityIcon  
+                        onClick={() => {openInPopup(produto, "Detalhes do Produto")}}
+                        className={classes.iconeVisualizar}
+                      />}
+                    </Controls.ActionButton>
+                  </TableCell>
                   <TableCell>{produto.quantidade}</TableCell>
                   <TableCell>{produto.categoria}</TableCell>
                   <TableCell>
@@ -146,15 +171,21 @@ function Produtos (props) {
                       <EditIcon 
                         color="primary" 
                         fontSize="small" 
-                        onClick={() => {openInPopup(produto)}}
+                        onClick={() => {openInPopup(produto, "Editar Produto")}}
                       />
                     </Controls.ActionButton>
                     <Controls.ActionButton>
                       <CloseIcon 
                         color="secondary" 
                         fontSize="small"
-                        onClick={() => {onDelete(produto.id)}}
-                      />
+                        onClick={() => 
+                          setConfirmDialog({
+                            isOpen: true,
+                            title: "Tem certeza que deseja excluir este produto?",
+                            subtitle: "Você não pode desfazer essa operação",
+                            onConfirm: () => { onDelete(produto.id) }
+                          })}
+                       />
                     </Controls.ActionButton>
                   </TableCell>
                 </TableRow>
@@ -167,7 +198,6 @@ function Produtos (props) {
       <Popup
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}
-        title="Editar Produto"
       >     
         <ProdutosForm
           produtoParaEditar={produtoParaEditar}
@@ -177,6 +207,10 @@ function Produtos (props) {
       <Notificacao
         notificacao={notificacao}
         setNotificacao={setNotificacao}
+      />
+      <Controls.ConfirmDialog 
+        confirmDialog={confirmDialog}
+        setConfirmDialog={setConfirmDialog}
       />
     </>
   )
