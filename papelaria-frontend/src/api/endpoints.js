@@ -4,6 +4,7 @@ const endpoints = {
   BASE_URL: `${localhost}/api/papelaria/`,
   LISTAR_PRODUTOS: (page, size) => `/produtos?page=${page}&size=${size}`,
   BUSCAR_PRODUTO: (id) => `/produtos/${id}`,
+  EDITAR_PRODUTO: (id) => `/produtos/${id}`,
   INSERIR_PRODUTO: `/produtos`,
   REMOVER_PRODUTOS: (id) => `/produtos/${id}`,
 }

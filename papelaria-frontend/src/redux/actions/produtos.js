@@ -25,5 +25,15 @@ export const postItem = (data, onSuccess) => dispatch => {
       type: ACTION_TYPES.POST,
       payload: response.data
     })
-  })
+  }).catch(err => console.log(err))
+}
+
+export const putItem = (data, onSuccess) => dispatch => {
+  api.put(`${endpoints.EDITAR_PRODUTO(data.id)}`, data)
+  .then(response => {
+    dispatch({
+      type: ACTION_TYPES.PUT,
+      payload: response.data
+    })
+  }).catch(err => console.log(err))
 }

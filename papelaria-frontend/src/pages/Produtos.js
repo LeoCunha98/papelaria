@@ -70,8 +70,15 @@ function Produtos (props) {
   }
 
   const addOuEditar = (produto, resetForm) => {
-    props.postProduto(produto);
+    console.log('produto.id', produto.id)
+    if(produto.id == null) {
+      props.postProduto(produto);
+    }
+    else {
+      props.putProduto(produto);
+    }
     resetForm();
+    setProdutoParaEditar(null);
     setOpenPopup(false);
     props.getAllProdutos();
     produtos = props.produtosList;
@@ -156,7 +163,8 @@ const mapStateToProps = state => ({
 
 const mapActionToProps = {
   getAllProdutos: actions.getAll,
-  postProduto: actions.postItem
+  postProduto: actions.postItem,
+  putProduto: actions.putItem
 }
 
 export default connect(mapStateToProps, mapActionToProps)(Produtos);
