@@ -46,6 +46,7 @@ function Produtos (props) {
   
   useEffect(() => {
     props.getAllProdutos()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   let produtos = props.produtosList;

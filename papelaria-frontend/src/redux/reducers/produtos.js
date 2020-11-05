@@ -19,12 +19,12 @@ export const produtos = (state = initialState, action ) => {
   case ACTION_TYPES.PUT:
         return {
           ...state,
-          list: state.list.map(x => x.id == action.payload.id ? action.payload : x)
+          list: state.list.map(x => x.id === action.payload.id ? action.payload : x)
         }
     case ACTION_TYPES.DELETE:
         return {
           ...state,
-          list: state.list.filter(x => x.id != action.payload)
+          list: state.list.filter(x => x.id !== action.payload)
         }
     default:
       return state;

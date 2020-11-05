@@ -53,7 +53,7 @@ const ProdutosForm = (props) => {
     })
 
     if(fieldValues === values)
-      return Object.values(temp).every(x => x == "");
+      return Object.values(temp).every(x => x === "");
   }
 
   const {
@@ -79,7 +79,7 @@ const ProdutosForm = (props) => {
         ...produtoParaEditar
       })
     }   
-  }, [produtoParaEditar]);
+  }, [setValues, produtoParaEditar]);
 
   return (
     <Form onSubmit={handleSubmitForm}>
