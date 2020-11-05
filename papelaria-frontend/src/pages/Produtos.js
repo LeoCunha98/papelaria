@@ -9,6 +9,8 @@ import useTable from '../components/useTable';
 import Controls from './../components/controls/Controls';
 import SearchIcon from '@material-ui/icons/Search';
 import AddIcon from '@material-ui/icons/Add';
+import EditIcon from '@material-ui/icons/Edit';
+import CloseIcon from '@material-ui/icons/Close';
 import Popup from '../components/Popup';
 
 const useStyles = makeStyles({
@@ -27,16 +29,13 @@ const useStyles = makeStyles({
 });
 
 const headers = [
+  { id:'id', label:'Identificador' },
   { id:'nome', label: 'Nome do Produto' },
   { id:'quantidade', label: 'Quantidade de Itens (unid.)' },
   { id:'categoria', label:'Categoria do Produto' },
+  { id:'acoes', label: 'Ações' },
+  
 ]
-
-const categorias = [
-  { id: '1', nome: "Material escolar"},
-  { id: '2', nome: "Livros didáticos"},
-  { id: '3', nome: "Lápis e Canetas"}
-];
 
 function Produtos (props) {
   
@@ -46,8 +45,8 @@ function Produtos (props) {
 
   let produtos = props.produtosList;
   const classes = useStyles();
-  const [filtrarProduto, setFiltrarProduto] = 
-      useState({ funcao: (produtos) => { return produtos; }});
+  const [produtoParaEditar, setProdutoParaEditar] = useState(null);
+  const [filtrarProduto, setFiltrarProduto] = useState({ funcao: (produtos) => { return produtos; }});
   const [openPopup, setOpenPopup] = useState(false);
 
   const { 
@@ -76,7 +75,11 @@ function Produtos (props) {
     setOpenPopup(false);
     props.getAllProdutos();
     produtos = props.produtosList;
-    console.log('produtos', produtos)
+  }
+
+  const openInPopup = (produto) => {
+    setProdutoParaEditar(produto);
+    setOpenPopup(true)
   }
 
   return (
@@ -114,9 +117,18 @@ function Produtos (props) {
             {
                dadosPaginados().map(produto => (
                 <TableRow key={produto.id}>
+                  <TableCell>{produto.id}</TableCell>
                   <TableCell>{produto.nome}</TableCell>
                   <TableCell>{produto.quantidade}</TableCell>
                   <TableCell>{produto.categoria}</TableCell>
+                  <TableCell>
+                    <Controls.ActionButton>
+                      <EditIcon color="primary" fontSize="small" onClick={() => {openInPopup(produto)}}/>
+                    </Controls.ActionButton>
+                    <Controls.ActionButton>
+                      <CloseIcon color="secondary" fontSize="small"/>
+                    </Controls.ActionButton>
+                  </TableCell>
                 </TableRow>
               ))
             }
@@ -129,7 +141,10 @@ function Produtos (props) {
         setOpenPopup={setOpenPopup}
         title="Adicionar Produto"
       >     
-        <ProdutosForm addOuEditar={addOuEditar} categorias={categorias}/>
+        <ProdutosForm
+          produtoParaEditar={produtoParaEditar}
+          addOuEditar={addOuEditar} 
+         />
       </Popup>
     </>
   )

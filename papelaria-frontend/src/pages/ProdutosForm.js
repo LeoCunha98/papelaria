@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Grid } from '@material-ui/core';
 import { useForm, Form } from './../components/useForm';
 import Controls from '../components/controls/Controls';
@@ -12,9 +12,16 @@ const initialFieldValues = {
   categoria: "",
   codigoBarra: ""
 }
+
+const categorias = [
+  { id: '1', nome: "Material escolar"},
+  { id: '2', nome: "Livros didáticos"},
+  { id: '3', nome: "Lápis e Canetas"}
+];
+
 const ProdutosForm = (props) => {
     
-  const { categorias, addOuEditar } = props;
+  const { addOuEditar, produtoParaEditar } = props;
 
   const validacaoCampos = (fieldValues = values) => {
     let temp = { ...errors };
@@ -63,6 +70,14 @@ const ProdutosForm = (props) => {
       addOuEditar(values, resetForm)
     }
   }
+
+  useEffect(() => {
+    if(produtoParaEditar != null) {
+      setValues({
+        ...produtoParaEditar
+      })
+    }   
+  }, [produtoParaEditar]);
 
   return (
     <Form onSubmit={handleSubmitForm}>

@@ -26,10 +26,10 @@ export default function Popup(props) {
           {title}
         </Typography>
         <Controls.ActionButton 
-          startIcon={<CloseIcon fontSize="large"/>}
           color="secondary"
           onClickEvent={() => setOpenPopup(false)}
           >
+          <CloseIcon fontSize="large"/>
         </Controls.ActionButton>
       </div>
       </DialogTitle>
