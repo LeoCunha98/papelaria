@@ -35,5 +35,17 @@ export const putItem = (data, onSuccess) => dispatch => {
       type: ACTION_TYPES.PUT,
       payload: response.data
     })
+    onSuccess()
+  }).catch(err => console.log(err))
+}
+
+export const deleteItem = (id, onSuccess) => dispatch => {
+  api.delete(`${endpoints.REMOVER_PRODUTOS(id)}`)
+  .then(response => {
+    dispatch({
+      type: ACTION_TYPES.DELETE,
+      payload: response.data
+    }) 
+    onSuccess()
   }).catch(err => console.log(err))
 }

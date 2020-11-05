@@ -12,6 +12,7 @@ import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import CloseIcon from '@material-ui/icons/Close';
 import Popup from '../components/Popup';
+import Notificacao from '../components/Notificacao';
 
 const useStyles = makeStyles({
   pageContent: {
@@ -48,6 +49,7 @@ function Produtos (props) {
   const [produtoParaEditar, setProdutoParaEditar] = useState(null);
   const [filtrarProduto, setFiltrarProduto] = useState({ funcao: (produtos) => { return produtos; }});
   const [openPopup, setOpenPopup] = useState(false);
+  const [notificacao, setNotificacao] = useState({ isOpen:false, message:"", type:"" });
 
   const { 
     TableContainer, 
@@ -70,23 +72,34 @@ function Produtos (props) {
   }
 
   const addOuEditar = (produto, resetForm) => {
-    console.log('produto.id', produto.id)
+    let ntfMsg = ""
     if(produto.id == null) {
       props.postProduto(produto);
+      ntfMsg = "Produto adicionado com sucesso!"
     }
     else {
       props.putProduto(produto);
+      ntfMsg = "Produto editado com sucesso!"
     }
     resetForm();
     setProdutoParaEditar(null);
     setOpenPopup(false);
     props.getAllProdutos();
     produtos = props.produtosList;
+    setNotificacao({
+      isOpen: true,
+      message: ntfMsg,
+      type:"success"
+    });
   }
 
   const openInPopup = (produto) => {
     setProdutoParaEditar(produto);
     setOpenPopup(true)
+  }
+
+  const onDelete = (id) => {
+    props.deleteProduto(id);
   }
 
   return (
@@ -130,10 +143,18 @@ function Produtos (props) {
                   <TableCell>{produto.categoria}</TableCell>
                   <TableCell>
                     <Controls.ActionButton>
-                      <EditIcon color="primary" fontSize="small" onClick={() => {openInPopup(produto)}}/>
+                      <EditIcon 
+                        color="primary" 
+                        fontSize="small" 
+                        onClick={() => {openInPopup(produto)}}
+                      />
                     </Controls.ActionButton>
                     <Controls.ActionButton>
-                      <CloseIcon color="secondary" fontSize="small"/>
+                      <CloseIcon 
+                        color="secondary" 
+                        fontSize="small"
+                        onClick={() => {onDelete(produto.id)}}
+                      />
                     </Controls.ActionButton>
                   </TableCell>
                 </TableRow>
@@ -153,6 +174,10 @@ function Produtos (props) {
           addOuEditar={addOuEditar} 
          />
       </Popup>
+      <Notificacao
+        notificacao={notificacao}
+        setNotificacao={setNotificacao}
+      />
     </>
   )
 }
@@ -164,7 +189,8 @@ const mapStateToProps = state => ({
 const mapActionToProps = {
   getAllProdutos: actions.getAll,
   postProduto: actions.postItem,
-  putProduto: actions.putItem
+  putProduto: actions.putItem,
+  deleteProduto: actions.deleteItem
 }
 
 export default connect(mapStateToProps, mapActionToProps)(Produtos);
