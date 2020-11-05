@@ -16,12 +16,14 @@ const initialFieldValues = {
 const categorias = [
   { id: '1', nome: "Material escolar"},
   { id: '2', nome: "Livros didáticos"},
-  { id: '3', nome: "Lápis e Canetas"}
+  { id: '3', nome: "Lápis e Canetas"},
+  { id: '4', nome: "Cadernos"},
+  { id: '5', nome: "Calculadoras"}
 ];
 
 const ProdutosForm = (props) => {
     
-  const { addOuEditar, produtoParaEditar } = props;
+  const { addOuEditar, produtoParaEditar, disabledFields = false } = props;
 
   const validacaoCampos = (fieldValues = values) => {
     let temp = { ...errors };
@@ -89,6 +91,7 @@ const ProdutosForm = (props) => {
             value={values.nome}
             onChange={handleInputChange}
             error={errors.nome}
+            disabled={disabledFields}
           />
           <Controls.Input
             label="Descrição do Produto (marca, modelo, etc)"
@@ -96,6 +99,7 @@ const ProdutosForm = (props) => {
             value={values.descricao}
             onChange={handleInputChange}
             error={errors.descricao}
+            disabled={disabledFields}
           />
           <Controls.Input
             label="Quantidade de Itens"
@@ -104,6 +108,7 @@ const ProdutosForm = (props) => {
             value={values.quantidade}
             onChange={handleInputChange}
             error={errors.quantidade}
+            disabled={disabledFields}
           />
           </Grid>
           <Grid item xs={6}>
@@ -113,6 +118,7 @@ const ProdutosForm = (props) => {
               value={values.categoria}
               onChange={handleInputChange}
               options={categorias}
+              disabled={disabledFields}
               error={errors.categoria}
             />
             <Controls.Input
@@ -122,6 +128,7 @@ const ProdutosForm = (props) => {
               value={values.codigoBarra}
               onChange={handleInputChange}
               error={errors.codigoBarra}
+              disabled={disabledFields}
             />
             <div>
               <Controls.Button 
@@ -130,6 +137,7 @@ const ProdutosForm = (props) => {
                 text="Enviar"
                 size="large"
                 type="submit"
+                disabled={disabledFields}
               /> 
               <Controls.Button 
                 variant="outlined"
@@ -137,6 +145,7 @@ const ProdutosForm = (props) => {
                 text="Cancelar"
                 size="large"
                 type="submit"
+                disabled={disabledFields}
                 onClick={resetForm}
               />  
             </div>

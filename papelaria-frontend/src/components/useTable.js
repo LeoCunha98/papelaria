@@ -30,7 +30,7 @@ const useStyles = makeStyles({
 export default function useTable(dados, headers, filtrarProduto) {
   const classes = useStyles();
 
-  const pages = [5, 10];
+  const pages = [5];
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(pages[page]);
 
@@ -51,7 +51,7 @@ export default function useTable(dados, headers, filtrarProduto) {
 
   const dadosPaginados = () => {
     return filtrarProduto.funcao(dados)
-    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+    .slice(page * rowsPerPage, (page + 1) * rowsPerPage)
   }
 
   const TblPagination = () => (

@@ -16,8 +16,8 @@ function App() {
 
   return (
     <Provider store={store}>
-      <MenuLateral />
         <div className={classes.appMain}>
+          <MenuLateral />
           <Header />
           <Produtos />
         </div>

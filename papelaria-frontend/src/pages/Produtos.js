@@ -51,6 +51,7 @@ function Produtos (props) {
   let produtos = props.produtosList;
   const classes = useStyles();
   const [produtoParaEditar, setProdutoParaEditar] = useState(null);
+  const [disabledFields, setDisabledFields] = useState(false);
   const [filtrarProduto, setFiltrarProduto] = useState({ funcao: (produtos) => { return produtos; }});
   const [openPopup, setOpenPopup] = useState({ isOpen:false , title:"" });
   const [notificacao, setNotificacao] = useState({ isOpen:false, message:"", type:"" });
@@ -144,8 +145,13 @@ function Produtos (props) {
             className={classes.botaoAdicionar}
             text="Novo Produto"
             variant="contained"
+            color="secondary"
             startIcon={<AddIcon />}
-            onClick={() => {setOpenPopup({ isOpen:true, title: "Adicionar Produto"}); setProdutoParaEditar(null)}}
+            onClick={() => {
+              setOpenPopup({ isOpen:true, title: "Adicionar Produto"}); 
+              setProdutoParaEditar(null)
+              setDisabledFields(false);
+            }}
           />
         </Toolbar>
         <TableContainer>
@@ -159,7 +165,10 @@ function Produtos (props) {
                     {produto.nome} 
                     <Controls.ActionButton >
                       {<VisibilityIcon  
-                        onClick={() => {openInPopup(produto, "Detalhes do Produto")}}
+                        onClick={() => {
+                          openInPopup(produto, "Detalhes do Produto");
+                          setDisabledFields(true)
+                        }}
                         className={classes.iconeVisualizar}
                       />}
                     </Controls.ActionButton>
@@ -171,7 +180,10 @@ function Produtos (props) {
                       <EditIcon 
                         color="primary" 
                         fontSize="small" 
-                        onClick={() => {openInPopup(produto, "Editar Produto")}}
+                        onClick={() => {
+                          openInPopup(produto, "Editar Produto");
+                          setDisabledFields(false)
+                        }}
                       />
                     </Controls.ActionButton>
                     <Controls.ActionButton>
@@ -200,6 +212,7 @@ function Produtos (props) {
         setOpenPopup={setOpenPopup}
       >     
         <ProdutosForm
+          disabledFields={disabledFields}
           produtoParaEditar={produtoParaEditar}
           addOuEditar={addOuEditar} 
          />
