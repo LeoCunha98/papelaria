@@ -6,9 +6,10 @@ import PageHeader from '../components/PageHeader';
 import ProdutosForm from './ProdutosForm';
 import { Paper, makeStyles, TableBody, TableRow, TableCell, Toolbar, InputAdornment } from '@material-ui/core';
 import useTable from '../components/useTable';
+import Controls from './../components/controls/Controls';
 import SearchIcon from '@material-ui/icons/Search';
-import Input from './../components/controls/Input';
-
+import AddIcon from '@material-ui/icons/Add';
+import Popup from '../components/Popup';
 
 const useStyles = makeStyles({
   pageContent: {
@@ -16,9 +17,26 @@ const useStyles = makeStyles({
     padding: "24px"
   },
   inputBuscar: {
-    width: "100%",
+    width: "65%",
+  },
+  botaoAdicionar: {
+    position: 'absolute',
+    right: "10px",
+
   }
 });
+
+const headers = [
+  { id:'nome', label: 'Nome do Produto' },
+  { id:'quantidade', label: 'Quantidade de Itens (unid.)' },
+  { id:'categoria', label:'Categoria do Produto' },
+]
+
+const categorias = [
+  { id: '1', nome: "Material escolar"},
+  { id: '2', nome: "Livros didáticos"},
+  { id: '3', nome: "Lápis e Canetas"}
+];
 
 function Produtos (props) {
   
@@ -26,24 +44,11 @@ function Produtos (props) {
     props.getAllProdutos()
   }, [])
 
-
-  let categorias = [
-    { id: '1', nome: "Material escolar"},
-    { id: '2', nome: "Livros didáticos"},
-    { id: '3', nome: "Lápis e Canetas"}
-  ];
-
+  let produtos = props.produtosList;
   const classes = useStyles();
-
-  const headers = [
-    { id:'nome', label: 'Nome do Produto' },
-    { id:'quantidade', label: 'Quantidade de Itens (unid.)' },
-    { id:'categoria', label:'Categoria do Produto' },
-  ]
-
-  const produtos = props.produtoList;
   const [filtrarProduto, setFiltrarProduto] = 
       useState({ funcao: (produtos) => { return produtos; }});
+  const [openPopup, setOpenPopup] = useState(false);
 
   const { 
     TableContainer, 
@@ -58,11 +63,20 @@ function Produtos (props) {
       funcao: items => {
         if(target.value){
           return items.filter(item => item.nome.toLowerCase().includes(target.value))
-        } else{
+        } else {
           return items;
         }
       }
     })
+  }
+
+  const addOuEditar = (produto, resetForm) => {
+    props.postProduto(produto);
+    resetForm();
+    setOpenPopup(false);
+    props.getAllProdutos();
+    produtos = props.produtosList;
+    console.log('produtos', produtos)
   }
 
   return (
@@ -73,9 +87,8 @@ function Produtos (props) {
         icone={<AssessmentIcon fontSize="large"/>} 
       />
       <Paper className={classes.pageContent}>
-        {/* <ProdutosForm categorias={categorias}/> */}
         <Toolbar> 
-          <Input
+          <Controls.Input
             label="Buscar produto"
             className={classes.inputBuscar}
             InputProps={{
@@ -86,6 +99,13 @@ function Produtos (props) {
               )  
             }}
             onChange={handleSearch}
+          />
+          <Controls.Button
+            className={classes.botaoAdicionar}
+            text="Novo Produto"
+            variant="contained"
+            startIcon={<AddIcon />}
+            onClick={() => setOpenPopup(true)}
           />
         </Toolbar>
         <TableContainer>
@@ -104,16 +124,24 @@ function Produtos (props) {
         </TableContainer>
         <TblPagination />
       </Paper>
+      <Popup
+        openPopup={openPopup}
+        setOpenPopup={setOpenPopup}
+        title="Adicionar Produto"
+      >     
+        <ProdutosForm addOuEditar={addOuEditar} categorias={categorias}/>
+      </Popup>
     </>
   )
 }
 
 const mapStateToProps = state => ({
-  produtoList: state.produtos.list
+  produtosList: state.produtos.list
 })
 
 const mapActionToProps = {
-  getAllProdutos: actions.getAll
+  getAllProdutos: actions.getAll,
+  postProduto: actions.postItem
 }
 
 export default connect(mapStateToProps, mapActionToProps)(Produtos);

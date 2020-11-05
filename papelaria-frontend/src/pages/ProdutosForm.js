@@ -14,7 +14,7 @@ const initialFieldValues = {
 }
 const ProdutosForm = (props) => {
     
-  const { categorias } = props;
+  const { categorias, addOuEditar } = props;
 
   const validacaoCampos = (fieldValues = values) => {
     let temp = { ...errors };
@@ -60,8 +60,7 @@ const ProdutosForm = (props) => {
   const handleSubmitForm = (e) => {
     e.preventDefault();
     if(validacaoCampos()){
-      props.postProduto(values)
-      resetForm()
+      addOuEditar(values, resetForm)
     }
   }
 
