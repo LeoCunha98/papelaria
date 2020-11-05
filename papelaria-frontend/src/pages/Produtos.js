@@ -115,7 +115,7 @@ function Produtos (props) {
             text="Novo Produto"
             variant="contained"
             startIcon={<AddIcon />}
-            onClick={() => setOpenPopup(true)}
+            onClick={() => {setOpenPopup(true); setProdutoParaEditar(null)}}
           />
         </Toolbar>
         <TableContainer>
@@ -146,7 +146,7 @@ function Produtos (props) {
       <Popup
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}
-        title="Adicionar Produto"
+        title="Editar Produto"
       >     
         <ProdutosForm
           produtoParaEditar={produtoParaEditar}
